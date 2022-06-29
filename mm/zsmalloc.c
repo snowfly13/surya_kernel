@@ -77,6 +77,17 @@
  */
 #define ZS_ALIGN		8
 
+/*
+ * A single 'zspage' is composed of up to 2^N discontiguous 0-order (single)
+ * pages. ZS_MAX_ZSPAGE_ORDER defines upper limit on N.
+ */
+#ifdef CONFIG_OPLUS_MM_HACKS
+#define ZS_MAX_ZSPAGE_ORDER 3
+#else
+#define ZS_MAX_ZSPAGE_ORDER 2
+#endif /* CONFIG_OPLUS_MM_HACKS */
+#define ZS_MAX_PAGES_PER_ZSPAGE (_AC(1, UL) << ZS_MAX_ZSPAGE_ORDER)
+
 #define ZS_HANDLE_SIZE (sizeof(unsigned long))
 
 /*
@@ -120,6 +131,11 @@
 #define HUGE_BITS	1
 #define FULLNESS_BITS	4
 #define CLASS_BITS	8
+#ifdef CONFIG_OPLUS_MM_HACKS
+#define ISOLATED_BITS	(ZS_MAX_ZSPAGE_ORDER+1)
+#else
+#define ISOLATED_BITS	3
+#endif /* CONFIG_OPLUS_MM_HACKS */
 #define MAGIC_VAL_BITS	8
 
 #define MAX(a, b) ((a) >= (b) ? (a) : (b))

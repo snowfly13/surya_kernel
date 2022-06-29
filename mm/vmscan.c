@@ -170,13 +170,13 @@ struct scan_control {
 /*
  * From 0 .. 100.  Higher means more swappy.
  */
-int vm_swappiness = 40;
+int vm_swappiness = 100;
 
 #ifdef CONFIG_OPLUS_MM_HACKS
 /*
  * Direct reclaim swappiness, values range from 0 .. 60. Higher means more swappy.
  */
-int direct_vm_swappiness = 20;
+int direct_vm_swappiness = 60;
 #endif /* CONFIG_OPLUS_MM_HACKS */
 
 /*
@@ -2287,7 +2287,7 @@ static bool inactive_list_is_low(struct lruvec *lruvec, bool file,
 		if (file && gb)
 			inactive_ratio = min(2UL, int_sqrt(10 * gb));
 #else
-		if (gb && is_file_lru(inactive_lru))
+		if (gb)
 			inactive_ratio = int_sqrt(10 * gb);
 #endif /* CONFIG_OPLUS_MM_HACKS */
 		else
@@ -2348,7 +2348,7 @@ static void get_scan_count(struct lruvec *lruvec, struct mem_cgroup *memcg,
 #ifdef CONFIG_OPLUS_MM_HACKS
 	unsigned long totalswap = total_swap_pages;
 #endif /* CONFIG_OPLUS_MM_HACKS */
-
+	prepare_workingset_protection(pgdat, sc);
 #ifdef CONFIG_OPLUS_MM_HACKS
 	if (!current_is_kswapd())
 		swappiness = direct_vm_swappiness;
