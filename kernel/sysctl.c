@@ -131,10 +131,6 @@ static unsigned long one_ul = 1;
 static unsigned long long_max = LONG_MAX;
 static int sixty = 60;
 static int one_hundred = 100;
-#ifdef CONFIG_OPLUS_MM_HACKS
-extern int direct_vm_swappiness;
-static int two_hundred = 200;
-#endif /* CONFIG_OPLUS_MM_HACKS */
 static int one_thousand = 1000;
 static int two_hundred_fifty_five = 255;
 #ifdef CONFIG_PELT_COMPATIBILITY_LAYER
@@ -152,8 +148,23 @@ static int ten_thousand = 10000;
 static int six_hundred_forty_kb = 640 * 1024;
 #endif
 
+#ifdef CONFIG_SCHED_WALT
+const int sched_user_hint_max = 1000;
+static unsigned int ns_per_sec = NSEC_PER_SEC;
+static unsigned int one_hundred_thousand = 100000;
+/*
+ * CFS task prio range is [100 ... 139]
+ * 120 is the default prio.
+ * RTG boost range is [100 ... 119] because giving
+ * boost for [120 .. 139] does not make sense.
+ * 99 means disabled and it is the default value.
+ */
+static unsigned int min_cfs_boost_prio = 99;
+static unsigned int max_cfs_boost_prio = 119;
+#endif
 #ifdef CONFIG_OPLUS_MM_HACKS
 extern int direct_vm_swappiness;
+static int sixty = 60;
 #endif /* CONFIG_OPLUS_MM_HACKS */
 
 /* this is needed for the proc_doulongvec_minmax of vm_dirty_bytes */
@@ -1704,22 +1715,17 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0444,
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= &zero,
-#ifdef CONFIG_OPLUS_MM_HACKS
-		.extra2         = &two_hundred,
-#else
 		.extra2		= &one_hundred,
-#endif /* CONFIG_OPLUS_MM_HACKS */
 	},
 #ifdef CONFIG_OPLUS_MM_HACKS
 	{
-	        .procname	= "direct_swappiness",
+		.procname	= "direct_swappiness",
 		.data		= &direct_vm_swappiness,
 		.maxlen 	= sizeof(direct_vm_swappiness),
-		.mode		= 0644,
+		.mode		= 0444,
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1 	= &zero,
-		.extra2 	= &two_hundred,
->>>>>>> 91f24c140ce3 (mm: Import oplus memory management hacks)
+		.extra2 	= &sixty,
 	},
 #endif /* CONFIG_OPLUS_MM_HACKS */
 	{
