@@ -40,6 +40,8 @@
 #include "tune.h"
 #include "walt.h"
 
+#include <linux/prefer_silver.h>
+
 #ifdef CONFIG_SMP
 static inline bool task_fits_max(struct task_struct *p, int cpu);
 #endif /* CONFIG_SMP */
@@ -8470,9 +8472,27 @@ static int find_energy_efficient_cpu(struct sched_domain *sd,
 	bool need_idle = wake_to_idle(p);
 	int placement_boost = task_boost_policy(p);
 	u64 start_t = 0;
-	int next_cpu = -1, backup_cpu = -1;
-	int boosted = (schedtune_task_boost(p) > 0);
-	bool about_to_idle = (cpu_rq(cpu)->nr_running < 2);
+	int delta = 0;
+	int task_boost = per_task_boost(p);
+	int boosted = (schedtune_task_boost(p) > 0) || (task_boost > 0);
+	int start_cpu;
+
+	if (is_many_wakeup(sibling_count_hint) && prev_cpu != cpu &&
+			cpumask_test_cpu(prev_cpu, &p->cpus_allowed))
+		return prev_cpu;
+
+	start_cpu = get_start_cpu(p);
+	if (start_cpu < 0)
+		goto eas_not_ready;
+
+	if (sysctl_prefer_silver && prefer_silver_check_task_util(p)) {
+		int best = find_best_silver_cpu(p);
+		if (best >= 0)
+			return best;
+	}
+
+	is_rtg = task_in_related_thread_group(p);
+	curr_is_rtg = task_in_related_thread_group(cpu_rq(cpu)->curr);
 
 	fbt_env.fastpath = 0;
 	fbt_env.need_idle = 0;
