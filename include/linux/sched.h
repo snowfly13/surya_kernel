@@ -553,6 +553,7 @@ extern u32 sched_get_init_task_load(struct task_struct *p);
 extern void sched_update_cpu_freq_min_max(const cpumask_t *cpus, u32 fmin,
 					  u32 fmax);
 extern int sched_set_boost(int enable);
+extern unsigned int sched_load_boost;
 
 #define RAVG_HIST_SIZE_MAX  5
 #define NUM_BUSY_BUCKETS 10
