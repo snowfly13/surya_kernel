@@ -1225,6 +1225,7 @@ typedef enum {
  * compactable pages.
  */
 int sysctl_compact_unevictable_allowed __read_mostly = 1;
+/* OPTIMIZED: Unevictable compaction enabled allows compacting unmovable pages for better fragmentation reduction */
 
 /*
  * Isolate all pages that can be migrated from the first suitable block,
@@ -1745,7 +1746,7 @@ static enum compact_result compact_zone_order(struct zone *zone, int order,
 	return ret;
 }
 
-int sysctl_extfrag_threshold = 500;
+int sysctl_extfrag_threshold = 250;
 
 /**
  * try_to_compact_pages - Direct compact to satisfy a high-order allocation
