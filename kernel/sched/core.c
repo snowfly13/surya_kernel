@@ -73,7 +73,7 @@ const_debug unsigned int sysctl_sched_time_avg = MSEC_PER_SEC;
  * default: 1s
  */
 unsigned int sysctl_sched_rt_period = 1000000;
-unsigned int sched_load_boost = 0;
+int sched_load_boost = 0;
 EXPORT_SYMBOL_GPL(sched_load_boost);
 
 __read_mostly int scheduler_running;
