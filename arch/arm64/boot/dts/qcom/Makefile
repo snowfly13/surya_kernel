@@ -343,7 +343,8 @@ ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 		trinket-iot-usbc-idp-overlay.dtbo \
 		trinketp-iot-usbc-idp-overlay.dtbo \
 		trinket-iot-dp-idp-overlay.dtbo \
-		trinketp-iot-dp-idp-overlay.dtbo
+		trinketp-iot-dp-idp-overlay.dtbo \
+		surya-overlay.dtbo
 
 trinket-rumi-overlay.dtbo-base := trinket.dtb
 trinket-idp-overlay.dtbo-base := trinket.dtb
@@ -363,6 +364,7 @@ trinket-iot-usbc-idp-overlay.dtbo-base := trinket-iot.dtb
 trinketp-iot-usbc-idp-overlay.dtbo-base := trinketp-iot.dtb
 trinket-iot-dp-idp-overlay.dtbo-base := trinket-iot.dtb
 trinketp-iot-dp-idp-overlay.dtbo-base := trinketp-iot.dtb
+surya-overlay.dtbo-base := trinket.dtb
 else
 dtb-$(CONFIG_ARCH_TRINKET)	+= trinket-rumi.dtb \
 	trinket-idp.dtb \

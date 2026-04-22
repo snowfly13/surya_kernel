@@ -1,0 +1,42 @@
+/*
+ * Device Tree Overlay for Xiaomi Surya
+ * Adds LED support for notification and charging
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "trinket.dtsi"
+
+/ {
+	model = "Xiaomi Surya";
+	compatible = "xiaomi,surya", "qcom,trinket";
+
+	/* Add tri-led for notification and charging */
+	pm6150l_rgb_led: qcom,leds@d000 {
+		compatible = "qcom,tri-led";
+		reg = <0xd000 0x100>;
+		status = "okay";
+
+		red {
+			label = "red";
+			pwms = <&pmi632_pwm 0 100000>;
+			led-sources = <0>;
+			linux,default-trigger = "default-on";
+		};
+
+		green {
+			label = "green";
+			pwms = <&pmi632_pwm 1 100000>;
+			led-sources = <1>;
+			linux,default-trigger = "default-on";
+		};
+
+		blue {
+			label = "blue";
+			pwms = <&pmi632_pwm 2 100000>;
+			led-sources = <2>;
+			linux,default-trigger = "default-on";
+		};
+	};
+};
