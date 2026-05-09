@@ -8,7 +8,9 @@
 
 #include <linux/sched.h>
 
+#ifdef CONFIG_SCHED_WALT
 extern unsigned int sched_ravg_window;
+#endif
 extern int sysctl_prefer_silver;
 extern int sysctl_heavy_task_thresh;
 extern int sysctl_cpu_util_thresh;
