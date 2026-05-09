@@ -83,10 +83,10 @@ int find_best_silver_cpu(struct task_struct *p)
 	int i, best_cpu = -1;
 	unsigned long min_util = ULONG_MAX;
 
-	for_each_cpu(i, &p->cpus_allowed) {
+	for_each_cpu(i, &p->cpus_mask) {
 		unsigned long cur_util;
 
-		if (cpu_topology[i].package_id != 0)
+		if (topology_physical_package_id(i) != 0)
 			continue;
 
 		if (!prefer_silver_check_freq(i))

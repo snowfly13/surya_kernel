@@ -164,7 +164,6 @@ static unsigned int max_cfs_boost_prio = 119;
 #endif
 #ifdef CONFIG_OPLUS_MM_HACKS
 extern int direct_vm_swappiness;
-static int sixty = 60;
 #endif /* CONFIG_OPLUS_MM_HACKS */
 
 /* this is needed for the proc_doulongvec_minmax of vm_dirty_bytes */
