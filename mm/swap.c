@@ -1086,7 +1086,7 @@ EXPORT_SYMBOL(pagevec_lookup_range_nr_tag);
  */
 void __init swap_setup(void)
 {
-	unsigned long megs = totalram_pages() >> (20 - PAGE_SHIFT);
+	unsigned long megs = totalram_pages >> (20 - PAGE_SHIFT);
 
 	/* Use a smaller cluster for small-memory machines */
 	if (megs < 16)
@@ -1100,5 +1100,4 @@ void __init swap_setup(void)
 #ifdef CONFIG_OPLUS_MM_HACKS
 	page_cluster = 0;
 #endif /* CONFIG_OPLUS_MM_HACKS */
->>>>>>> 91f24c140ce3 (mm: Import oplus memory management hacks)
 }

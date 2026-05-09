@@ -2348,7 +2348,7 @@ static void get_scan_count(struct lruvec *lruvec, struct mem_cgroup *memcg,
 #ifdef CONFIG_OPLUS_MM_HACKS
 	unsigned long totalswap = total_swap_pages;
 #endif /* CONFIG_OPLUS_MM_HACKS */
-	prepare_workingset_protection(pgdat, sc);
+
 #ifdef CONFIG_OPLUS_MM_HACKS
 	if (!current_is_kswapd())
 		swappiness = direct_vm_swappiness;
