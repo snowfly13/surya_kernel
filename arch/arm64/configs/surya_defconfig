@@ -1,4 +1,4 @@
-#
+/#
 # Automatically generated file; DO NOT EDIT.
 # Linux/arm64 4.14.357 Kernel Configuration
 #
@@ -400,6 +400,8 @@ CONFIG_DEFAULT_CFQ=y
 # CONFIG_DEFAULT_SIO is not set
 CONFIG_DEFAULT_IOSCHED="cfq"
 # CONFIG_MQ_IOSCHED_DEADLINE is not set
+CONFIG_MQ_IOSCHED_ADIOS=y
+CONFIG_MQ_IOSCHED_DEFAULT_ADIOS=y
 # CONFIG_MQ_IOSCHED_KYBER is not set
 # CONFIG_IOSCHED_BFQ is not set
 CONFIG_ASN1=y
